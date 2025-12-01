@@ -16,7 +16,6 @@ export const DialogClose = DialogPrimitive.Close;
 
 export function DialogOverlay({
 	className,
-
 	...props
 }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
 	return (
@@ -56,7 +55,7 @@ export function DialogContent({
         data-[state=closed]:animate-out
         data-[state=closed]:fade-out-0
         data-[state=closed]:slide-out-to-bottom-[48%]
-        `,
+      `,
 					className,
 				)}
 				{...props}>
@@ -96,12 +95,9 @@ export function DialogBody({
 	children,
 	...props
 }: React.ComponentProps<'div'>) {
-	return (
-		<div {...props}>
-			<Text>{children}</Text>
-		</div>
-	);
+	return <div {...props}>{children}</div>;
 }
+
 export function DialogFooter({
 	children,
 	...props
