@@ -1,5 +1,3 @@
-import { useParams } from 'react-router';
-
 import useAlbums from '../contexts/albums/hooks/use-albums';
 import type { Photo } from '../contexts/photos/models/photo';
 
@@ -12,7 +10,6 @@ import AlbumsListSelectable from '../contexts/albums/components/albums-list-sele
 import PhotosNavigator from '../contexts/photos/components/photos-navigator';
 
 export function PagePhotoDetails() {
-	const { id } = useParams();
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	const isLoadingPhoto = false;

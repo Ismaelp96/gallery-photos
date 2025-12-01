@@ -1,8 +1,6 @@
 import type React from 'react';
 
 import SelectCheckbox from '../../../assets/images/select-checkbox.svg?react';
-import type { Photo } from '../../photos/models/photo';
-
 import {
 	Dialog,
 	DialogBody,
