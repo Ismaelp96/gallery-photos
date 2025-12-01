@@ -1,3 +1,8 @@
+import { useParams } from 'react-router';
+
+import useAlbums from '../contexts/albums/hooks/use-albums';
+import type { Photo } from '../contexts/photos/models/photo';
+
 import Button from '../components/button';
 import Container from '../components/container';
 import ImagePreview from '../components/image-preview';
@@ -5,10 +10,12 @@ import Skeleton from '../components/skeleton';
 import Text from '../components/text';
 import AlbumsListSelectable from '../contexts/albums/components/albums-list-selectable';
 import PhotosNavigator from '../contexts/photos/components/photos-navigator';
-import type { Photo } from '../contexts/photos/models/photo';
 
 export function PagePhotoDetails() {
+	const { albums, isLoadingAlbums } = useAlbums();
+
 	const isLoadingPhoto = false;
+
 	const photo = {
 		id: '123',
 		title: 'Olá mundo!',
@@ -53,11 +60,8 @@ export function PagePhotoDetails() {
 					</Text>
 					<AlbumsListSelectable
 						photo={photo}
-						albums={[
-							{ id: '3421', title: 'Esportes' },
-							{ id: '1234', title: 'Natureza' },
-							{ id: '4132', title: 'Geométrico' },
-						]}
+						albums={albums}
+						loading={isLoadingAlbums}
 					/>
 				</div>
 			</div>
