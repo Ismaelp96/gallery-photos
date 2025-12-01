@@ -1,5 +1,4 @@
 import type React from 'react';
-import { useForm } from 'react-hook-form';
 
 import SelectCheckbox from '../../../assets/images/select-checkbox.svg?react';
 import type { Photo } from '../../photos/models/photo';
@@ -17,7 +16,7 @@ import InputText from '../../../components/input-text';
 import Button from '../../../components/button';
 import Text from '../../../components/text';
 import Skeleton from '../../../components/skeleton';
-import ImagePreview from '../../../components/image-preview';
+import PhotoImageSelectable from '../../photos/components/photo-image-selectable';
 
 interface PhotoNewDialogProps {
 	trigger: React.ReactNode;
@@ -40,6 +39,10 @@ export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
 			albums: [],
 		},
 	];
+
+	function handleTogglePhoto(selected: boolean, photoId: string) {
+		console.log(selected, photoId);
+	}
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -53,11 +56,14 @@ export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
 						{!isLoadingPhotos && photos.length > 0 && (
 							<div className='flex items-center gap-3 flex-wrap'>
 								{photos.map((photo) => (
-									<ImagePreview
+									<PhotoImageSelectable
 										key={photo.id}
 										src={`/images/${photo.imageId}`}
 										title={photo.title}
-										imageClassName='	h-21 w-21 roundend'
+										imageClassName='w-21 h-21'
+										onSelectImage={(selected) =>
+											handleTogglePhoto(selected, photo.id)
+										}
 									/>
 								))}
 							</div>
@@ -67,7 +73,7 @@ export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
 							<div className='flex items-center gap-3 flex-wrap'>
 								{Array.from({ length: 4 }).map((_, i) => (
 									<Skeleton
-										className='h-21 w-21 roundend'
+										className='h-21 w-21 rounded-lg'
 										key={`photo-loading-${i}`}
 									/>
 								))}
