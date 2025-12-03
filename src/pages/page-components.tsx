@@ -27,6 +27,7 @@ export default function PageComponents() {
 	const file = form.watch('file');
 
 	const fileSrc = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
+
 	return (
 		<div className='grid gap-7 p-6'>
 			<div className='flex gap-3'>
