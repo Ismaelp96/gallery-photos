@@ -14,6 +14,8 @@ import { url } from '../helpers/api';
 export function PagePhotoDetails() {
 	const { id } = useParams();
 	const { photo, isLoadingPhoto, previousPhotoId, nextPhotoId } = usePhoto(id);
+
+	console.log('photo', photo);
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	if (!isLoadingPhoto && !photo) {
@@ -22,7 +24,7 @@ export function PagePhotoDetails() {
 	return (
 		<Container>
 			<header className='flex items-center justify-between gap-8 mb-8'>
-				{isLoadingPhoto ? (
+				{!isLoadingPhoto ? (
 					<Text as='h2' variant='heading-large'>
 						{photo?.title}
 					</Text>
