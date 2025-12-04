@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -20,17 +20,21 @@ import InputText from '../../../components/input-text';
 import Skeleton from '../../../components/skeleton';
 import Text from '../../../components/text';
 import useAlbums from '../../albums/hooks/use-albums';
+import usePhoto from '../hooks/use-photo';
 
 interface PhotoNewDialogProps {
 	trigger: React.ReactNode;
 }
 export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 	const [modalOpen, setModalOpen] = useState(false);
+	const [isCreatingPhoto, setIsCreatingPhoto] = useTransition();
+	const { albums, isLoadingAlbums } = useAlbums();
+
+	const { createPhoto } = usePhoto();
 
 	const form = useForm<PhotoNewFormSchema>({
 		resolver: zodResolver(photoNewFormSchema),
 	});
-	const { albums, isLoadingAlbums } = useAlbums();
 	const file = form.watch('file');
 	const fileSrc = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
@@ -56,7 +60,10 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 	}
 
 	function handleSubmit(payload: PhotoNewFormSchema) {
-		console.log(payload);
+		setIsCreatingPhoto(async () => {
+			await createPhoto(payload);
+			setModalOpen(false);
+		});
 	}
 
 	return (
@@ -111,9 +118,16 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 					</DialogBody>
 					<DialogFooter>
 						<DialogClose asChild>
-							<Button variant='secondary'>Cancelar</Button>
+							<Button variant='secondary' disabled={isCreatingPhoto}>
+								Cancelar
+							</Button>
 						</DialogClose>
-						<Button type='submit'>Adicionar</Button>
+						<Button
+							type='submit'
+							disabled={isCreatingPhoto}
+							handling={isCreatingPhoto}>
+							{isCreatingPhoto ? 'adicionando...' : 'Adicionar'}
+						</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>
