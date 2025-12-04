@@ -40,7 +40,7 @@ export default function PhotoImageSelectable({
 			})}>
 			<ImagePreview {...props} />
 			<InputCheckbox
-				checked={isSelected}
+				defaultChecked={isSelected}
 				onChange={handleSelect}
 				className='absolute top-1 left-1'
 			/>
