@@ -1,4 +1,4 @@
-import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import SelectCheckbox from '../../../assets/images/select-checkbox.svg?react';
 import {
@@ -17,19 +17,28 @@ import Skeleton from '../../../components/skeleton';
 import PhotoImageSelectable from '../../photos/components/photo-image-selectable';
 import usePhotos from '../../photos/hooks/use-photos';
 import { url } from '../../../helpers/api';
+import { useForm } from 'react-hook-form';
 
 interface PhotoNewDialogProps {
 	trigger: React.ReactNode;
 }
 
 export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
+	const form = useForm();
+	const [modalOpen, setModalOpen] = useState(false);
 	const { photos, isLoadingPhotos } = usePhotos();
+
+	useEffect(() => {
+		if (!modalOpen) {
+			form.reset();
+		}
+	}, [modalOpen, form]);
 
 	function handleTogglePhoto(selected: boolean, photoId: string) {
 		console.log(selected, photoId);
 	}
 	return (
-		<Dialog>
+		<Dialog open={modalOpen} onOpenChange={setModalOpen}>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>Criar álbum</DialogHeader>
