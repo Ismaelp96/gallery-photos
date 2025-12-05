@@ -24,7 +24,7 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
 					imageClassName='w-[10.875rem] h-[10.875rem] rounded-lg'
 				/>
 			) : (
-				<Skeleton className='w-[10.875rem] h-[10.875rem] rounded-lg' />
+				<Skeleton className='w-43.5 h-43.5 rounded-lg' />
 			)}
 			<div className='flex flex-col gap-2'>
 				{!loading ? (
@@ -34,7 +34,7 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
 				) : (
 					<Skeleton className='w-full h-6' />
 				)}
-				<div className='flex gap-1 min-h-[1.375rem]'>
+				<div className='flex gap-1 min-h5.5'>
 					{!loading ? (
 						<>
 							{photo.albums.slice(0, 1).map((album) => (
